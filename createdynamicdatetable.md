@@ -1,7 +1,8 @@
 # Create your own datedim table in Power Query
 
 let
-    Source = #date(2017, 1, 1),
+
+Source = #date(2017, 1, 1),
     Custom1 = List.Dates(Source, Number.From(DateTime.LocalNow())- Number.From(Source) ,#duration(1,0,0,0)),
     #"Converted to Table" = Table.FromList(Custom1, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
     #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Date"}}),
@@ -58,5 +59,7 @@ else if [MONTH_VALUE]= 12 and [DAY_OF_MONTH_NUMBER]=26 and [DAY_OF_WEEK_NUMBER]=
     #"Changed Type2" = Table.TransformColumnTypes(#"Split Column by Position",{{"Month Name - Copy.1", type text}, {"Month Name - Copy.2", type text}}),
     #"Removed Columns1" = Table.RemoveColumns(#"Changed Type2",{"Month Name - Copy.2"}),
     #"Renamed Columns3" = Table.RenameColumns(#"Removed Columns1",{{"Month Name - Copy.1", "Month"}})
+
 in
-    #"Renamed Columns3"
+
+#"Renamed Columns3"
