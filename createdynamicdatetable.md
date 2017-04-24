@@ -3,7 +3,8 @@
 let
 
 Source = #date(2017, 1, 1),
-    Custom1 = List.Dates(Source, Number.From(DateTime.LocalNow())- Number.From(Source) ,#duration(1,0,0,0)),
+
+Custom1 = List.Dates(Source, Number.From(DateTime.LocalNow())- Number.From(Source) ,#duration(1,0,0,0)),
     #"Converted to Table" = Table.FromList(Custom1, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
     #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "Date"}}),
     #"Inserted Year" = Table.AddColumn(#"Renamed Columns", "Year", each Date.Year([Date]), type number),
