@@ -16,3 +16,17 @@ unlink(temp)
 remove(CSVFile)
 remove(temp)
 remove(urlziplocation)
+
+## example
+
+
+  library(dplyr)
+  TEST <- list.files(unzip("C:\\Advanced Power BI\\Module Resources\\Module 01\\Customer Sales.zip", files = NULL, list = TRUE))
+  head(TEST)
+  select(TEST, Name)
+	
+	
+	
+	data <- read.csv(unz("C:\\Advanced Power BI\\Module Resources\\Module 01\\Customer Sales.zip", "Customer Sales.csv"))
+    data
+	
