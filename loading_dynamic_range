@@ -1,0 +1,19 @@
+# Example of loading a table with a range
+
+This is an example of bringing in a table from a dynamic date range
+
+## add a parameter 
+
+in this case add one call "DaysBack"
+
+### Use the dynamic date.from function to load in that range
+
+let
+    StartDate = Date.From(Date.AddDays(DateTime.LocalNow(),DaysBack)),
+    Source = Excel.Workbook(File.Contents("C:\Advanced Power BI\Data\Databases\AdventureWorksDW.xlsx"), null, true),
+    FactInternetSales_Sheet = Source{[Item="FactInternetSales",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(FactInternetSales_Sheet, [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"OrderDateKey", Int64.Type}, {"DueDateKey", Int64.Type}, {"ShipDateKey", Int64.Type}, {"CustomerKey", Int64.Type}, {"PromotionKey", Int64.Type}, {"CurrencyKey", Int64.Type}, {"SalesTerritoryKey", Int64.Type}, {"SalesOrderNumber", type text}, {"SalesOrderLineNumber", Int64.Type}, {"RevisionNumber", Int64.Type}, {"OrderQuantity", Int64.Type}, {"UnitPrice", type number}, {"ExtendedAmount", type number}, {"UnitPriceDiscountPct", Int64.Type}, {"DiscountAmount", Int64.Type}, {"ProductStandardCost", type number}, {"TotalProductCost", type number}, {"SalesAmount", type number}, {"TaxAmt", type number}, {"Freight", type number}, {"CarrierTrackingNumber", type text}, {"CustomerPONumber", type text}, {"OrderDate", type date}, {"DueDate", type date}, {"ShipDate", type date}}),
+    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each [OrderDate] > StartDate)
+in
+    #"Filtered Rows"
