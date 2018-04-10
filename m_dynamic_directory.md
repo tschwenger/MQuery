@@ -8,15 +8,15 @@ Important if directory location changes. you only have to update the variable th
 
 (Directory, FileName) =>
 
-let
-    Source = Excel.Workbook(File.Contents(Directory & FileName), null, true),
-    Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data],
-    #"Changed Type" = Table.TransformColumnTypes(Table1_Table,{{"Name", type text}, {"State", type text}}),
-    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "Name", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"Name.1", "Name.2"}),
-    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Name.1", type text}, {"Name.2", type text}}),
-    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Name.1", "FirstName"}, {"Name.2", "LastName"}})
-in
-    #"Renamed Columns"
+    let
+        Source = Excel.Workbook(File.Contents(Directory & FileName), null, true),
+        Table1_Table = Source{[Item="Table1",Kind="Table"]}[Data],
+        #"Changed Type" = Table.TransformColumnTypes(Table1_Table,{{"Name", type text}, {"State", type text}}),
+        #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "Name", Splitter.SplitTextByEachDelimiter({" "}, QuoteStyle.Csv, false), {"Name.1", "Name.2"}),
+        #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Name.1", type text}, {"Name.2", type text}}),
+        #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Name.1", "FirstName"}, {"Name.2", "LastName"}})
+    in
+        #"Renamed Columns"
     
     
    let
