@@ -6,7 +6,7 @@ Important if directory location changes. you only have to update the variable th
 
 ### create a function
 
-(Directory, FileName) =>
+    (Directory, FileName) =>
 
     let
         Source = Excel.Workbook(File.Contents(Directory & FileName), null, true),
@@ -19,7 +19,7 @@ Important if directory location changes. you only have to update the variable th
         #"Renamed Columns"
     
     
-   let
+       let
     Source = Folder.Files("C:\Advanced Power BI\Module Resources\Module 02"),
     #"Filtered Rows" = Table.SelectRows(Source, each ([Name] <> "Body Mass Index.xlsx")),
     #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Extension", "Date accessed", "Date modified", "Date created", "Attributes", "Content"}),
@@ -27,5 +27,5 @@ Important if directory location changes. you only have to update the variable th
     #"Invoked Custom Function" = Table.AddColumn(#"Reordered Columns", "Table1", each Table1([Folder Path], [Name])),
     #"Expanded Table1" = Table.ExpandTableColumn(#"Invoked Custom Function", "Table1", {"FirstName", "LastName", "State"}, {"FirstName", "LastName", "State"}),
     #"Removed Columns1" = Table.RemoveColumns(#"Expanded Table1",{"Folder Path", "Name"})
-in
+    in
     #"Removed Columns1"
